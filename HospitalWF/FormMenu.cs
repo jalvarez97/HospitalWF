@@ -12,7 +12,6 @@ namespace HospitalWF
 {
     public partial class FormMenu : Form
     {
-
         Automatizacion oAutomatiza = new Automatizacion();
         
         public List<Persona> lstPersonas = new List<Persona>();
@@ -29,9 +28,9 @@ namespace HospitalWF
         {
             lstMedicos.AddRange(oAutomatiza.GenerarMedicos(100));
             lstPacientes.AddRange(oAutomatiza.GenerarPacientes(1000, lstMedicos));
-
             lstPersonas.AddRange(lstMedicos);
             lstPersonas.AddRange(lstPacientes);
+
             cboFiltro.SelectedIndex = 0;
             cboBuscarPorCampo.SelectedIndex = 0;
         }      
@@ -210,44 +209,36 @@ namespace HospitalWF
             }
         }
 
-        public void BuscarPersonas()
+        private void BuscarPersonas()
         {
             List<Persona> lstAuxiliar = new List<Persona>();
             var compareInfo = CultureInfo.InvariantCulture.CompareInfo;
-
-            if (txtBuscar.Text != null && txtBuscar.Text != "")
+            
+            switch (cboBuscarPorCampo.SelectedIndex)
             {
-                switch (cboBuscarPorCampo.SelectedIndex)
-                {
-                    case 0:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Nombre, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 1:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Edad.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 2:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Sexo.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 3:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.DocIdentidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 4:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Email, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 5:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.NumTelefono.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 6:
-                        lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Ocupacion, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                }
+                case 0:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Nombre, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 1:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Edad.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 2:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Sexo.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 3:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.DocIdentidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 4:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Email, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 5:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.NumTelefono.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 6:
+                    lstAuxiliar.AddRange(lstPersonas.Where(p => compareInfo.IndexOf(p.Ocupacion, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
             }
-            else
-            {
-                lstAuxiliar.Clear();
-                lstAuxiliar = lstPersonas;
-            }
-
+            
             var bindingList = new BindingList<Persona>(lstAuxiliar);
             var source = new BindingSource(bindingList, null);
 
@@ -268,43 +259,34 @@ namespace HospitalWF
             List<Medico> lstAuxiliar = new List<Medico>();
             var compareInfo = CultureInfo.InvariantCulture.CompareInfo;
 
-            if (txtBuscar.Text != null && txtBuscar.Text != "")
+            switch (cboBuscarPorCampo.SelectedIndex)
             {
-                switch (cboBuscarPorCampo.SelectedIndex)
-                {
-                    case 0:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Nombre, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 1:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Edad.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 2:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Sexo.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 3:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.DocIdentidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 4:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Email, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 5:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.NumTelefono.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 6:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.NumColegiado.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 7:
-                        lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Especialidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                }
+                case 0:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Nombre, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 1:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Edad.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 2:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Sexo.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 3:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.DocIdentidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 4:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Email, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 5:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.NumTelefono.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 6:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.NumColegiado.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 7:
+                    lstAuxiliar.AddRange(lstMedicos.Where(p => compareInfo.IndexOf(p.Especialidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
             }
-            else
-            {
-                lstAuxiliar.Clear();
-                lstAuxiliar = lstMedicos;
-            }
-
-
+            
             var bindingList = new BindingList<Medico>(lstAuxiliar);
             var source = new BindingSource(bindingList, null);
 
@@ -327,46 +309,37 @@ namespace HospitalWF
         {
             List<Paciente> lstAuxiliar = new List<Paciente>();
             var compareInfo = CultureInfo.InvariantCulture.CompareInfo;
-
-            if (txtBuscar.Text != null && txtBuscar.Text != "")
+                            
+            switch (cboBuscarPorCampo.SelectedIndex)
             {
-                switch (cboBuscarPorCampo.SelectedIndex)
-                {
-                    case 0:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Nombre, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 1:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Edad.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 2:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Sexo.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 3:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.DocIdentidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 4:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Email, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 5:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.NumTelefono.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 6:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Enfermedad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 7:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Tratamiento, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                    case 8:
-                        lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.MedicoAsignado.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
-                        break;
-                }
-            }
-            else
-            {
-                lstAuxiliar.Clear();
-                lstAuxiliar = lstPacientes;
-            }
-
+                case 0:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Nombre, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 1:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Edad.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 2:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Sexo.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 3:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.DocIdentidad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 4:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Email, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 5:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.NumTelefono.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 6:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Enfermedad, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 7:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.Tratamiento, txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+                case 8:
+                    lstAuxiliar.AddRange(lstPacientes.Where(p => compareInfo.IndexOf(p.MedicoAsignado.ToString(), txtBuscar.Text, CompareOptions.IgnoreCase) > -1));
+                    break;
+            }            
 
             var bindingList = new BindingList<Paciente>(lstAuxiliar);
             var source = new BindingSource(bindingList, null);
@@ -384,8 +357,6 @@ namespace HospitalWF
                 grdPersonal.CurrentCell = grdPersonal.Rows[0].Cells[2];
                 txtBuscar.Focus();
             }
-        }
-
-        
+        }   
     }
 }
